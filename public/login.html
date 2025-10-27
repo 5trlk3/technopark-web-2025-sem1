@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/login_style.css">
+</head>
+
+<body>
+    <header class="authenticated">
+        <div class="header_const">
+            <a href="./index.html" class="main_name_href">
+                <h1 class="main_name">AskVindman</h1>
+            </a>
+            <div class="find_and_ask">
+                <form class="search_form" method="POST" action="./tags.html">
+                    <input type="text" placeholder="Search..." class="search_input">
+                    <button class="find_button">Find</button>
+                </form>
+                <a href="./ask.html">
+                    <button class="ask_button" type="submit">ASK!</button>
+                </a>
+            </div>
+        </div>
+        <div class="authenticated-only">
+            <img src="../img/user.png" alt="user_photo" class="user_photo">
+            <div class="user_info">
+                <span class="user_name" >Dr. Gradov</span>
+                <div class="user_href">
+                    <a href="./index.html">log out</a>
+                    <a href="./settings.html">settings</a>
+                </div>
+            </div>
+        </div>
+        <div class="guest-only">
+            <div class="user_href">
+                <a href="./login.html">log in</a>
+                <a href="./signup.html">register</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="except_aside">
+            <span class="login_header">Log In</span>
+            <form class="login_form" method="POST" action="#">
+                <span>Login</span><input type="text" class="login_input" placeholder="Enter your login..." required>
+                <span>Password</span><input type="text" class="password_input" placeholder="Enter your password..." required>
+                <div class="action_button">
+                    <button class="login_submit" type="submit">Log In</button>
+                </div>
+                <div class="reg_button">
+                    <a href="./signup.html">Register new account</a>
+                </div>
+            </form>
+        </div>
+        <aside class="aside">
+            <div>
+                <span class="aside_header">Popular tags</span>
+                <div class="popular_tags">
+                    <a href="./tags.html">python</a>
+                    <a href="./tags.html">perl</a>
+                    <a href="./tags.html">php</a>
+                    <a href="./tags.html">c++</a>
+                    <a href="./tags.html">c</a>
+                </div>
+            </div>
+            <div>
+                <span class="aside_header">Popular members</span>
+                <div class="popular_members">
+                    <a href="./profile.html">Dr. Who</a>
+                    <a href="./profile.html">Dr. House</a>
+                    <a href="./profile.html">Michael324</a>
+                    <a href="./profile.html">Alex645</a>
+                    <a href="./profile.html">Anthony2264</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <span id="footer_text">VindmanAO</span>
+    </footer>
+</body>
+</html>
