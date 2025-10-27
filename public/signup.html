@@ -44,12 +44,12 @@
     <main class="main">
         <div class="except_aside">
             <span class="registration_header">Registration</span>
-            <form class="registration_form" method="POST" action="#">
+            <form class="registration_form" method="POST" action="./login.html">
                 <label for="login_input">Login</label><input type="text" class="login_input" placeholder="Enter login..." required>
                 <label for="email_input">Email</label><input type="email" class="email_input" placeholder="Enter email..." required>
                 <label for="nick_input">Nickname</label><input type="text" class="nick_input" placeholder="Enter nickname..." required>
-                <label for="pass_input">Password</label><input type="password" class="pass_input" placeholder="Enter password..." required>
-                <label for="rep_pass_input">Repeat password</label><input type="password" class="rep_pass_input" placeholder="Enter password again..." required>
+                <label for="pass_input">Password</label><input type="password" class="pass_input" placeholder="Enter password..." minlength="8" required>
+                <label for="rep_pass_input">Repeat password</label><input type="password" class="rep_pass_input" placeholder="Enter password again..." minlength="8" required>
                 <label for="avatar_input">Upload avatar</label><input type="file" class="avatar_input" accept="image/png, image/jpeg">
                 <div class="action_button">
                     <button class="register_submit" type="submit">Register</button>
