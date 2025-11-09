@@ -123,8 +123,30 @@ header {
     justify-content: space-between;
 }
 
+.recent .recent-only {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.hot .hot-only {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.recent-only, .hot-only {
+    display: none;
+}
+
 .recent_questions_header {
     font-size: 2em;
+    font-weight: bolder;
+}
+
+.hot_questions_header {
     font-weight: bolder;
 }
 
