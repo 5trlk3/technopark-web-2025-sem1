@@ -1,0 +1,43 @@
+{% extends "questions/base.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'questions/css/index_style.css' %}">
+    <div class="questions">
+        <div class="{{ quest_type }}">
+            <div class="recent-only">
+                <span class="recent_questions_header">Recent questions</span>
+                <a href="{% url 'hot' %}">Hot questions</a>
+            </div>
+            <div class="hot-only">
+                <a href="{% url 'recent' %}">Recent questions</a>
+                <span class="recent_questions_header">Hot questions</span>
+            </div>
+        </div>
+        {% for q in questions %}
+            <div class="question">
+                <div class="question_cover">
+                    <a href="{% url 'user_profile' q.user %}">
+                        <img class="question_photo" src="{% static 'questions/img/user.png' %}">
+                    </a>
+                    <div class="question_text">
+                        <a href="{% url 'conc_question' q.id %}" class="question_header">{{ q.question }}</a>
+                        <span>{{ q.concrete_question }}</span>
+                    </div>
+                </div>
+                <div class="extra_funcs">
+                    <input class="vote_check" type="number" value="{{ q.rating }}">
+                    <a href="{% url 'conc_question' q.id %}">Answers({{ q.answer_count }})</a>
+                    <div>
+                        Tags:
+                        {% for t in q.tags %}
+                            <a href="{% url 'tag' t.name %}">{{ t.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block breadcrumbs %}
+    {% include "paginator.html" %}
+{% endblock %}

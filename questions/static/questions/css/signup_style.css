@@ -1,0 +1,79 @@
+.except_aside {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.registration_header {
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+.registration_form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 15px;
+    gap: 10px;
+    align-items:first baseline;
+}
+
+.login_input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid #a6a0ed;
+    border-radius: 10px;
+}
+
+.email_input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid #a6a0ed;
+    border-radius: 10px;
+}
+
+.nick_input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid #a6a0ed;
+    border-radius: 10px;
+}
+
+.pass_input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid #a6a0ed;
+    border-radius: 10px;
+}
+
+.rep_pass_input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+    border: 2px solid #a6a0ed;
+    border-radius: 10px;
+}
+
+.action_button {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.register_submit {
+    height: 40px;
+    width: 100px;
+    color: white;
+    border: none;
+    background-color: #a6a0ed;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.register_submit:hover {
+    filter: brightness(80%);
+}
