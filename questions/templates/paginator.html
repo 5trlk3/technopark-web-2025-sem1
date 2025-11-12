@@ -1,0 +1,25 @@
+<div class="pagination">
+    {% if need_user_link %}
+        {% if questions.has_previous %}
+            <a href="{% url url_name param %}?page={{ questions.previous_page_number }}"
+               class="pagination_item">< previous</a>
+        {% endif %}
+        <a href="{% url url_name param %}?page={{ questions.number }}"
+           class="pagination_item">{{ questions.number }}</a>
+        {% if questions.has_next %}
+            <a href="{% url url_name param %}?page={{ questions.next_page_number }}"
+               class="pagination_item">next ></a>
+        {% endif %}
+    {% else %}
+        {% if questions.has_previous %}
+            <a href="{% url url_name %}?page={{ questions.previous_page_number }}"
+               class="pagination_item">< previous</a>
+        {% endif %}
+        <a href="{% url url_name %}?page={{ questions.number }}"
+           class="pagination_item">{{ questions.number }}</a>
+        {% if questions.has_next %}
+            <a href="{% url url_name %}?page={{ questions.next_page_number }}"
+               class="pagination_item">next ></a>
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,0 +1,36 @@
+{% extends "questions/base.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'questions/css/tags_style.css' %}">
+    <div class="except_aside">
+        <span class="tags_header">Tag: {{ chosen_tag }}</span>
+        <div class="questions">
+            {% for q in questions %}
+                <div class="question">
+                    <div class="question_cover">
+                        <a href="{% url 'user_profile' q.user %}">
+                            <img class="question_photo" src="{% static 'questions/img/user.png' %}">
+                        </a>
+                        <div class="question_text">
+                            <a href="{% url 'conc_question' id %}" class="question_header">{{ q.question }}</a>
+                            <span>{{ q.concrete_question }}</span>
+                        </div>
+                    </div>
+                    <div class="extra_funcs">
+                        <input class="vote_check" type="number" value="{{ q.rating }}">
+                        <a href="{% url 'conc_question' id %}">Answers({{ q.answer_count }})</a>
+                        <div>
+                            Tags:
+                            {% for t in q.tags %}
+                                <a href="{% url 'tag' t.name %}">{{ t.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block breadcrumbs %}
+    {% include "paginator.html" with param=chosen_tag %}
+{% endblock %}
