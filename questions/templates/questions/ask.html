@@ -1,0 +1,17 @@
+{% extends "questions/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'questions/css/ask_style.css' %}">
+<div class="except_aside">
+    <span class="question_header">New question</span>
+    <form class="question_creator" method="POST" action="{% url 'conc_question' id %}">
+        {% csrf_token %}
+        <label for="title_input">Title</label><input type="text" class="title_input" placeholder="Enter title..." required>
+        <label for="text_input">Text</label><textarea type="text" class="text_input" placeholder="Enter text..." required></textarea>
+        <label for="tags_input">Tags</label><input type="text" class="tags_input" placeholder="Enter tags...">
+        <div class="action_button">
+            <button class="question_submit" type="submit">Create question</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
