@@ -1,5 +1,7 @@
+import json
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 QUESTIONS = []
 for i in range(1,60):
@@ -47,8 +49,8 @@ def index(request, *args, **kwargs):
                    'questions/index.html',
                      context={"quest_type": "recent",
                                "questions": paginate(QUESTIONS, request),
-                               "has_auth": HAS_AUTH, 
-                               "tags": TAGS, 
+                               "has_auth": HAS_AUTH,
+                               "tags": TAGS,
                                "cur_tag": "Moon",
                                "title": "FAQ AskVindman",
                                "url_name": 'recent',
@@ -57,12 +59,12 @@ def index(request, *args, **kwargs):
 
 def hot_index(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
-                  'questions/index.html', 
-                  context={"quest_type": "hot", 
+    return render(request,
+                  'questions/index.html',
+                  context={"quest_type": "hot",
                            "questions": paginate(QUESTIONS, request),
-                           "has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
+                           "has_auth": HAS_AUTH,
+                           "tags": TAGS,
                            "cur_tag": "Moon",
                            "title": "Hot Questions",
                            "url_name": 'hot',
@@ -71,10 +73,10 @@ def hot_index(request, *args, **kwargs):
 
 def question(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
+    return render(request,
                   'questions/question.html',
                   context={"tags": TAGS,
-                           "has_auth": HAS_AUTH, 
+                           "has_auth": HAS_AUTH,
                            "cur_tag": "Moon",
                            "title": "Question",
                            "cur_question": QUESTIONS[kwargs.get('id') - 1],
@@ -85,11 +87,11 @@ def question(request, *args, **kwargs):
 
 def ask(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
-                  'questions/ask.html', 
+    return render(request,
+                  'questions/ask.html',
                   context={"tags": TAGS,
-                           "popular_questions": QUESTIONS, 
-                           "has_auth": HAS_AUTH, 
+                           "popular_questions": QUESTIONS,
+                           "has_auth": HAS_AUTH,
                            "cur_tag": "Moon",
                            "title": "Ask",
                            "id": "1",
@@ -97,12 +99,12 @@ def ask(request, *args, **kwargs):
 
 def tag(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
-                  'questions/tags.html', 
-                  context={"questions": paginate(QUESTIONS, request), 
-                           "has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
-                           "chosen_tag": kwargs.get('name'), 
+    return render(request,
+                  'questions/tags.html',
+                  context={"questions": paginate(QUESTIONS, request),
+                           "has_auth": HAS_AUTH,
+                           "tags": TAGS,
+                           "chosen_tag": kwargs.get('name'),
                            "cur_tag": "Moon",
                            "title": "Tag",
                            "id": "4",
@@ -111,12 +113,16 @@ def tag(request, *args, **kwargs):
                            "popular_questions": QUESTIONS})
 
 def user_profile(request, *args, **kwargs):
-    print(kwargs)
-    return render(request, 
-                  'questions/profile.html', 
-                  context={"user": {"name": kwargs.get('user'), "about": "Hello, my name is Salvatore. Im glad to see you on my page!"}, 
-                           "has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
+    usr = kwargs.get('user')
+    if "{" in usr or "}" in usr:
+        usr = json.loads(str(usr).replace("\'", "\""))
+        usr = usr.get("name")
+
+    return render(request,
+                  'questions/profile.html',
+                  context={"user": {"name": usr , "about": "Hello, my name is Salvatore. Im glad to see you on my page!"},
+                           "has_auth": HAS_AUTH,
+                           "tags": TAGS,
                            "cur_tag": "Moon",
                            "title": "Profile",
                            "questions": paginate(QUESTIONS, request),
@@ -126,20 +132,20 @@ def user_profile(request, *args, **kwargs):
 
 def signup(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
+    return render(request,
                   'questions/signup.html',
-                   context={"has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
+                   context={"has_auth": HAS_AUTH,
+                           "tags": TAGS,
                            "cur_tag": "Moon",
                            "title": "Sign Up",
                            "popular_questions": QUESTIONS,
                            "url_name": 'signup'})
 
 def login(request, *args, **kwargs):
-    return render(request, 
-                  'questions/login.html', 
-                  context={"has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
+    return render(request,
+                  'questions/login.html',
+                  context={"has_auth": HAS_AUTH,
+                           "tags": TAGS,
                            "cur_tag": "Moon",
                            "title": "Log In",
                            "url_name": 'login',
@@ -147,11 +153,11 @@ def login(request, *args, **kwargs):
 
 def settings(request, *args, **kwargs):
     print(kwargs)
-    return render(request, 
-                  'questions/settings.html', 
-                  context={"user": "user1", 
-                           "has_auth": HAS_AUTH, 
-                           "tags": TAGS, 
+    return render(request,
+                  'questions/settings.html',
+                  context={"user": "user1",
+                           "has_auth": HAS_AUTH,
+                           "tags": TAGS,
                            "cur_tag": "Moon",
                            "title": "Profile",
                            "popular_questions": QUESTIONS,

@@ -1,51 +1,61 @@
 {% extends "questions/base.html" %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'questions/css/question_style.css' %}">
-<div class="except_aside">
-    <div class="question">
-        <div class="question_cover">
-            <a href="{% url 'user_profile' cur_question.user %}"><img class="question_photo" src="{% static 'questions/img/user.png' %}"></a>
-            <div class="question_text">
-                <h3 class="question_header">{{ cur_question.question }}</h3>
-                <span>{{ cur_question.concrete_question }}</span>
-            </div>
-        </div>
-        <div class="extra_funcs">
-            <input class="vote_check" type="number" value="{{ cur_question.rating }}">
-            <div>
-                Tags:
-                {% for t in cur_question.tags %}
-                <a href="{% url 'tag' t.name %}">{{ t.name }}</a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <h2 style="margin-left: 10px;">Answers</h2>
-    <div class="answers">
-        {% for a in answers %}
-        <div class="answer">
-            <div class="answer_body">
-                <a href="{% url 'user_profile' a.user %}"><img class="answer_photo" src="{% static 'questions/img/user.png' %}" alt="user_photo" class></a>
-                <span>{{ a.answer }}</span>
+    <link rel="stylesheet"
+          href="{% static 'questions/css/question_style.css' %}">
+    <div class="except_aside">
+        <div class="question">
+            <div class="question_cover">
+                <a href="{% url 'user_profile' cur_question.user %}">
+                    <img class="question_photo" src="{% static 'questions/img/user.png' %}">
+                </a>
+                <div class="question_text">
+                    <h3 class="question_header">{{ cur_question.question }}</h3>
+                    <span>{{ cur_question.concrete_question }}</span>
+                </div>
             </div>
             <div class="extra_funcs">
-                <input type="number" value="{{ a.rating }}" class="vote_check">
-                <div class="correct_check">
-                    <input type="checkbox" class="correct_ans_checkbox"><span>Correct!</span>
+                <input class="vote_check" type="number" value="{{ cur_question.rating }}">
+                <div>
+                    Tags:
+                    {% for t in cur_question.tags %}
+                        <a href="{% url 'tag' t.name %}">{{ t.name }}</a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <h2 style="margin-left: 10px;">Answers</h2>
+        <div class="answers">
+            {% for a in answers %}
+                <div class="answer">
+                    <div class="answer_body">
+                        <a href="{% url 'user_profile' a.user %}">
+                            <img class="answer_photo"
+                                 src="{% static 'questions/img/user.png' %}"
+                                 alt="user_photo"
+                                 class>
+                        </a>
+                        <span>{{ a.answer }}</span>
+                    </div>
+                    <div class="extra_funcs">
+                        <input type="number" value="{{ a.rating }}" class="vote_check">
+                        <div class="correct_check">
+                            <input type="checkbox" class="correct_ans_checkbox">
+                            <span>Correct!</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <form class="own_answer"
+              method="POST"
+              action="{% url 'conc_question' id=cur_question.id %}">
+            {% csrf_token %}
+            <textarea class="input_own_ans" placeholder="Enter your answer..." required></textarea>
+            <button class="send_own_ans" type="submit">Answer</button>
+        </form>
     </div>
-    <form class="own_answer" method="POST" action="{% url 'conc_question' id=cur_question.id %}">
-        {% csrf_token %}
-        <textarea class="input_own_ans" placeholder="Enter your answer..." required></textarea>
-        <button class="send_own_ans" type="submit">Answer</button>
-    </form>
-</div>
 {% endblock %}
-
 {% block breadcrumbs %}
     {% include "paginator.html" with questions=answers param=cur_question.id %}
 {% endblock %}

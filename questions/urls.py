@@ -1,5 +1,16 @@
 from django.urls import path
-from questions.views import index, question, ask, hot_index, tag, user_profile, signup, login, settings
+
+from questions.views import (
+    ask,
+    hot_index,
+    index,
+    login,
+    question,
+    settings,
+    signup,
+    tag,
+    user_profile,
+)
 
 urlpatterns = [
     path("", index, name="recent"),

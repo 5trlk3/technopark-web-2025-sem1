@@ -1,0 +1,21 @@
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "C", "N", "D", "DJ"]
+ignore = ["E501"]
+per-file-ignores = {"__init__.py" = ["E402"]}
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.djlint]
+profile = "django"
+max-line-length = 120
+close-void-tags = true
+max-blank-lines = 1
+
+# ruff check --fix .
+# djlint . --profile=django --reformat

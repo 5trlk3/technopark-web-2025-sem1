@@ -1,21 +1,102 @@
-html {
-    overflow-y: scroll;
+@media (max-width: 999px) {
+    body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 600px;
+    font: 1em sans-serif;
+    }
+
+    .main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content: space-between;
+    }
+
+    header {
+    margin: 0px 10px 10px 10px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border-bottom: 1px solid gray;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    }
+
+    .search_input {
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid #a6a0ed;
+    min-width: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+
+    .authenticated .authenticated-only {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 10%;
+        justify-content: right;
+    }
+
+    .user_photo {
+        display: none;
+    }
+
+    .user_name {
+        display: none;
+    }
+
+    .guest .guest-only {
+        display: flex;
+        flex-direction: column;
+        width: 10%;
+        justify-content: right;
+    }
+
+    .header_const {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        gap: 10px;
+    }
+
+    .search_form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+    }
 }
 
-* {
-    padding: 0px;
-    margin: 0px;
-}
-
-body {
+@media (min-width: 1000px) {
+    body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     min-width: 1000px;
     font: 1em sans-serif;
-}
+    }
 
-header {
+    .main {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    justify-content: space-between;
+    }
+
+    header {
     margin: 0px 10px 10px 10px;
     padding-top: 10px;
     padding-bottom: 8px;
@@ -27,14 +108,49 @@ header {
     position: sticky;
     top: 0;
     background-color: white;
-}
+    }
 
-.header_const {
+    .search_input {
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid #a6a0ed;
+    width: 250px;
+    padding-left: 5px;
+    padding-right: 5px;
+    }
+
+    .authenticated .authenticated-only {
     display: flex;
     flex-direction: row;
+    width: 40%;
     align-items: center;
-    width: 90%;
-    justify-content: space-between;
+    justify-content: right;
+    
+    }
+
+    .guest .guest-only {
+        display: flex;
+        flex-direction: row;
+        width: 40%;
+        justify-content: right;
+    }
+
+    .header_const {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 90%;
+        justify-content: space-between;
+    }
+}
+
+html {
+    overflow-y: scroll;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
 }
 
 .main_name_href {
@@ -44,15 +160,6 @@ header {
 .main_name {
     font-weight: bolder;
     color: black;
-}
-
-.search_input {
-    height: 30px;
-    border-radius: 10px;
-    border: 2px solid #a6a0ed;
-    width: 250px;
-    padding-left: 5px;
-    padding-right: 5px;
 }
 
 .find_and_ask {
@@ -92,22 +199,6 @@ header {
     display: none;
 }
 
-.authenticated .authenticated-only {
-    display: flex;
-    flex-direction: row;
-    width: 40%;
-    align-items: center;
-    justify-content: right;
-    
-}
-
-.guest .guest-only {
-    display: flex;
-    flex-direction: row;
-    width: 40%;
-    justify-content: right;
-}
-
 .user_photo {
     margin-right: 5px;
     height: 25px;
@@ -116,15 +207,6 @@ header {
 
 .user_href {
     padding-right: 10px;
-}
-
-.main {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    margin-left: 10px;
-    margin-right: 10px;
-    justify-content: space-between;
 }
 
 .aside {
@@ -147,6 +229,15 @@ header {
 a {
     color: #1a0dab;
     text-decoration: none;
+}
+
+.input_mistake {
+    grid-column: -2;
+    padding: 3px 0 3px 0;
+    border-radius: 3px;
+    background-color: #fb3333;
+    padding: 5px;
+    color: white;
 }
 
 #footer_text {
