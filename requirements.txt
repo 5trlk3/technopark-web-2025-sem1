@@ -1,3 +1,6 @@
 Django
 ruff
 djlint
+psycopg2
+Pillow
+Faker

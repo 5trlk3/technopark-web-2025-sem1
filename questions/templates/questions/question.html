@@ -6,11 +6,11 @@
     <div class="except_aside">
         <div class="question">
             <div class="question_cover">
-                <a href="{% url 'user_profile' cur_question.user %}">
+                <a href="{% url 'user_profile' cur_question.profile_id.nickname %}">
                     <img class="question_photo" src="{% static 'questions/img/user.png' %}">
                 </a>
                 <div class="question_text">
-                    <h3 class="question_header">{{ cur_question.question }}</h3>
+                    <h3 class="question_header">{{ cur_question.title }}</h3>
                     <span>{{ cur_question.concrete_question }}</span>
                 </div>
             </div>
@@ -29,13 +29,13 @@
             {% for a in answers %}
                 <div class="answer">
                     <div class="answer_body">
-                        <a href="{% url 'user_profile' a.user %}">
+                        <a href="{% url 'user_profile' a.profile_id.nickname %}">
                             <img class="answer_photo"
                                  src="{% static 'questions/img/user.png' %}"
                                  alt="user_photo"
                                  class>
                         </a>
-                        <span>{{ a.answer }}</span>
+                        <span>{{ a.text }}</span>
                     </div>
                     <div class="extra_funcs">
                         <input type="number" value="{{ a.rating }}" class="vote_check">

@@ -53,16 +53,16 @@
                 <div>
                     <span class="aside_header">Popular tags</span>
                     <div class="popular_tags">
-                        {% for t in tags %}
-                            <a href="{% url 'tag' t %}">{{ t }}</a>
+                        {% for t in popular_tags %}
+                            <a href="{% url 'tag' t.name %}">{{ t.name }}</a>
                         {% endfor %}
                     </div>
                 </div>
                 <div>
                     <span class="aside_header">Popular members</span>
                     <div class="popular_members">
-                        {% for q in popular_questions %}
-                            <a href="{% url 'user_profile' user=q.user %}">{{ q.user }}</a>
+                        {% for u in popular_users %}
+                            <a href="{% url 'user_profile' user=u.nickname %}">{{ u.nickname }}</a>
                         {% endfor %}
                     </div>
                 </div>
