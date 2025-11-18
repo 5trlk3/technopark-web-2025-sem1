@@ -8,12 +8,12 @@
             {% for q in questions %}
                 <div class="question">
                     <div class="question_cover">
-                        <a href="{% url 'user_profile' q.user %}">
+                        <a href="{% url 'user_profile' q.profile_id.nickname %}">
                             <img class="question_photo" src="{% static 'questions/img/user.png' %}">
                         </a>
                         <div class="question_text">
-                            <a href="{% url 'conc_question' id %}" class="question_header">{{ q.question }}</a>
-                            <span>{{ q.concrete_question }}</span>
+                            <a href="{% url 'conc_question' id %}" class="question_header">{{ q.title }}</a>
+                            <span>{{ q.text }}</span>
                         </div>
                     </div>
                     <div class="extra_funcs">

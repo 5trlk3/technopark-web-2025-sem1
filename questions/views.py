@@ -1,32 +1,10 @@
-import json
-
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
-
-QUESTIONS = []
-for i in range(1,60):
-  QUESTIONS.append({
-    "question": "title " + str(i),
-    "id": i,
-    "concrete_question": "text" + str(i),
-    "answer_count": 5,
-    "tags": [{"name": "black-jack"}, {"name": "blender"}],
-    "rating": i,
-    "user": "user" + str(i),
-  })
-
-ANSWERS = []
-for i in range(1,60):
-  ANSWERS.append({
-    "id": i,
-    "answer": "Answer is pretty easy! You should ...Answer is pretty easy! You should ..." + str(i),
-    "rating": 3,
-    "user": "user" + str(i),
-  })
-
-TAGS = ["item" + str(i) for i in range(1, 30)]
+from questions import models
+from django.shortcuts import get_object_or_404
 
 HAS_AUTH = "guest"
+
 
 def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page)
@@ -39,7 +17,9 @@ def paginate(objects_list, request, per_page=10):
         page = paginator.page(paginator.num_pages)
     return page
 
-def index(request, *args, **kwargs):
+
+def index(request):
+    questions = models.Question.objects.recent()
     global HAS_AUTH
     if request.GET.get('in') == 'false':
         HAS_AUTH = "guest"
@@ -48,117 +28,113 @@ def index(request, *args, **kwargs):
     return render(request,
                    'questions/index.html',
                      context={"quest_type": "recent",
-                               "questions": paginate(QUESTIONS, request),
+                               "questions": paginate(questions, request),
                                "has_auth": HAS_AUTH,
-                               "tags": TAGS,
+                               "popular_tags": models.Tag.objects.popular(),
                                "cur_tag": "Moon",
                                "title": "FAQ AskVindman",
                                "url_name": 'recent',
                                "need_user_link": False,
-                               "popular_questions": QUESTIONS})
+                               "popular_users": models.User_profile.objects.popular()})
 
-def hot_index(request, *args, **kwargs):
-    print(kwargs)
+def hot_index(request):
+    questions = models.Question.objects.hot()
     return render(request,
                   'questions/index.html',
                   context={"quest_type": "hot",
-                           "questions": paginate(QUESTIONS, request),
+                           "questions": paginate(questions, request),
                            "has_auth": HAS_AUTH,
-                           "tags": TAGS,
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "cur_tag": "Moon",
                            "title": "Hot Questions",
                            "url_name": 'hot',
-                           "need_user_link": False,
-                           "popular_questions": QUESTIONS})
+                           "need_user_link": False})
 
-def question(request, *args, **kwargs):
-    print(kwargs)
+def question(request, id):
+    cur_question = get_object_or_404(models.Question.objects.with_annotations(), id=id)
+    answers = models.Answer.objects.for_question(cur_question)
     return render(request,
                   'questions/question.html',
-                  context={"tags": TAGS,
+                  context={"popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "has_auth": HAS_AUTH,
                            "cur_tag": "Moon",
                            "title": "Question",
-                           "cur_question": QUESTIONS[kwargs.get('id') - 1],
-                           "answers": paginate(ANSWERS, request),
+                           "cur_question": cur_question,
+                           "answers": paginate(answers, request),
                            "url_name": 'conc_question',
-                           "need_user_link": True,
-                           "popular_questions": QUESTIONS})
+                           "need_user_link": True})
 
-def ask(request, *args, **kwargs):
-    print(kwargs)
+def ask(request):
     return render(request,
                   'questions/ask.html',
-                  context={"tags": TAGS,
-                           "popular_questions": QUESTIONS,
+                  context={"popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "has_auth": HAS_AUTH,
                            "cur_tag": "Moon",
                            "title": "Ask",
                            "id": "1",
-                           "url_name": 'ask'})
+                           "url_name": "ask"})
 
-def tag(request, *args, **kwargs):
-    print(kwargs)
+def tag(request, name):
+    questions = models.Question.objects.by_tag(name)
     return render(request,
                   'questions/tags.html',
-                  context={"questions": paginate(QUESTIONS, request),
+                  context={"questions": paginate(questions, request),
                            "has_auth": HAS_AUTH,
-                           "tags": TAGS,
-                           "chosen_tag": kwargs.get('name'),
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
+                           "chosen_tag": name,
                            "cur_tag": "Moon",
                            "title": "Tag",
                            "id": "4",
                            "url_name": 'tag',
-                           "need_user_link": True,
-                           "popular_questions": QUESTIONS})
+                           "need_user_link": True})
 
-def user_profile(request, *args, **kwargs):
-    usr = kwargs.get('user')
-    if "{" in usr or "}" in usr:
-        usr = json.loads(str(usr).replace("\'", "\""))
-        usr = usr.get("name")
+def user_profile(request, user):
+    profile = get_object_or_404(models.User_profile, nickname=user)
+    questions = models.Question.objects.by_user(profile)
 
     return render(request,
                   'questions/profile.html',
-                  context={"user": {"name": usr , "about": "Hello, my name is Salvatore. Im glad to see you on my page!"},
+                  context={"user": profile,
                            "has_auth": HAS_AUTH,
-                           "tags": TAGS,
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "cur_tag": "Moon",
                            "title": "Profile",
-                           "questions": paginate(QUESTIONS, request),
+                           "questions": paginate(questions, request),
                            "url_name": 'user_profile',
-                           "need_user_link": True,
-                           "popular_questions": QUESTIONS})
+                           "need_user_link": True})
 
-def signup(request, *args, **kwargs):
-    print(kwargs)
+def signup(request):
     return render(request,
                   'questions/signup.html',
                    context={"has_auth": HAS_AUTH,
-                           "tags": TAGS,
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "cur_tag": "Moon",
                            "title": "Sign Up",
-                           "popular_questions": QUESTIONS,
                            "url_name": 'signup'})
 
-def login(request, *args, **kwargs):
+def login(request):
     return render(request,
                   'questions/login.html',
                   context={"has_auth": HAS_AUTH,
-                           "tags": TAGS,
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "cur_tag": "Moon",
                            "title": "Log In",
-                           "url_name": 'login',
-                           "popular_questions": QUESTIONS})
+                           "url_name": 'login'})
 
-def settings(request, *args, **kwargs):
-    print(kwargs)
+def settings(request):
     return render(request,
                   'questions/settings.html',
                   context={"user": "user1",
                            "has_auth": HAS_AUTH,
-                           "tags": TAGS,
+                           "popular_tags": models.Tag.objects.popular(),
+                           "popular_users": models.User_profile.objects.popular(),
                            "cur_tag": "Moon",
                            "title": "Profile",
-                           "popular_questions": QUESTIONS,
                            "url_name": 'settings'})
