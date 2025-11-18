@@ -10,7 +10,7 @@
                  alt="user_photo"
                  class="profile_img">
             <div class="text_info">
-                <span class="header">About</span><span class="main_info">{{ user.about }}</span>
+                <span class="header">About</span><span class="main_info">{{ user.about|default:"User didn't leave description..." }}</span>
             </div>
         </div>
         <span class="questions_header">User's questions:</span>
@@ -40,5 +40,5 @@
     </div>
 {% endblock %}
 {% block breadcrumbs %}
-    {% include "paginator.html" with param=user %}
+    {% include "paginator.html" with param=user.nickname %}
 {% endblock %}
